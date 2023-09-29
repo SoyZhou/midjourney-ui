@@ -49,17 +49,17 @@ const streamFetch = async (
 };
 
 export const Imagine = (body: string, loading?: (uri: MJMessage) => void) => {
-  return streamFetch("api/imagine/", body, loading);
+  return streamFetch("/api/imagine/", body, loading);
 };
 
 export const Upscale = (body: string, loading?: (uri: MJMessage) => void) => {
-  return streamFetch("api/upscale/", body, loading);
+  return streamFetch("/api/upscale/", body, loading);
 };
 
 export const Variation = (body: string, loading?: (uri: MJMessage) => void) => {
-  return streamFetch("api/variation/", body, loading);
+  return streamFetch("/api/variation/", body, loading);
 };
 
 export const Custom = (body: string, loading?: (uri: MJMessage) => void) => {
-  return streamFetch("api/custom/", body, loading);
+  return streamFetch("/api/custom/", body, loading);
 };

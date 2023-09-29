@@ -5,7 +5,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   GithubFilled,
 } from '@ant-design/icons';
-import { Image, Button } from 'antd';
+import { Image, Button, Divider } from 'antd';
 import MJLogo from '../images/mj-logo.png';
 
 import { Route, MenuDataItem } from '@ant-design/pro-layout/lib/typing'
@@ -15,12 +15,10 @@ import AuthContext from "../stores/authContext";
 import { useRouter } from 'next/router';
 
 
-const ProLayout = dynamic(() => import('@ant-design/pro-layout'), {
-  ssr: false,
-})
+const ProLayout = dynamic(() => import('@ant-design/pro-layout'), {ssr: false})
 
 const ROUTES: Route = {
-  path: '/',
+  path: '/midjourney',
   routes: [
     {
       path: '/midjourney',
@@ -34,30 +32,20 @@ const menuHeaderRender = (
   logo: React.ReactNode,
   title: React.ReactNode,
 ) => (
-  <Link href="/">
+  <Link href="/midjourney">
     {logo}
     {title}
   </Link>
 )
 
 const menuItemRender = (options: MenuDataItem, element: React.ReactNode) => (
-  <Link href={options.path ?? '/'}>
-    {element}
+  <Link href={options.path ?? '/midjourney'}>
+    {options.icon}<Divider type="vertical" />{options.name}
   </Link>
 )
 
-export default function Main(children: JSX.Element) {
+export default function Main(props: any) {
   const [dark, setDark] = useState(false);
-  const { user, authReady, logout } = useContext(AuthContext);
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log(user, authReady);
-    if (authReady && !user) {
-      router.push('/');
-    }
-  }, [authReady, user, router])
-
   useEffect(() => {
     // Check the theme when the user first visits the page
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -74,6 +62,14 @@ export default function Main(children: JSX.Element) {
       }
     });
   }, []);
+
+  const router = useRouter();
+  const { user, authReady, logout } = useContext(AuthContext);
+  useEffect(() => {
+    if (authReady && !user) {
+      router.push('/');
+    }
+  }, [authReady, user, router, logout])
 
   return (
     <ProConfigProvider
@@ -99,7 +95,6 @@ export default function Main(children: JSX.Element) {
             </Link>,
           ];
         }}
-  
         menuItemRender={menuItemRender}
         menuFooterRender={(props) => {
           if (props?.collapsed) return undefined;
@@ -116,7 +111,7 @@ export default function Main(children: JSX.Element) {
         }}
         menuHeaderRender={menuHeaderRender}
       >
-        {children}
+        {props.children}
       </ProLayout>
     </ProConfigProvider>
   )

@@ -1,17 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Divider, Typography } from "antd";
 import AuthContext from "../stores/authContext";
-import { useRouter } from 'next/router';
+import Link from "next/link";
 
 const Index: React.FC = () => {
-  const router = useRouter();
   const { user, login, authReady } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (authReady && user) {
-      router.push('/midjourney');
-    }
-  }, [authReady, login, router, user]);
 
   return (
     <div className="login-background p-10 flex items-center justify-around">
@@ -21,12 +14,31 @@ const Index: React.FC = () => {
       </div>
       <Divider type="vertical" />
       <div>
-        <button onClick={login} className="bg-white bg-opacity-20 hover:bg-opacity-50 text-white border-white border-2 p-5 rounded-lg text-3xl cursor-pointer">
-          Launch App
-        </button>
+        {authReady && user ? (
+          <Link href="/midjourney">
+            <button className="bg-white bg-opacity-20 hover:bg-opacity-50 text-white border-white border-2 p-5 rounded-lg text-3xl cursor-pointer">
+              Launch App
+            </button>
+          </Link>
+        ) : (
+          <button
+            onClick={login}
+            className="bg-white bg-opacity-20 hover:bg-opacity-50 text-white border-white border-2 p-5 rounded-lg text-3xl cursor-pointer"
+          >
+            Launch App
+          </button>
+        )}
       </div>
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      ssr: false, // 禁用 SSR
+    },
+  };
+}
 
 export default Index;
