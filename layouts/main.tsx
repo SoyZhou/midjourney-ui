@@ -38,13 +38,13 @@ const menuHeaderRender = (
   </Link>
 )
 
-const menuItemRender = (options: MenuDataItem, element: React.ReactNode) => (
+const menuItemRender = (options: MenuDataItem) => (
   <Link href={options.path ?? '/midjourney'}>
     {options.icon}<Divider type="vertical" />{options.name}
   </Link>
 )
 
-export default function Main(props: any) {
+export default function Main({children}: { children: React.ReactNode }) {
   const [dark, setDark] = useState(false);
   useEffect(() => {
     // Check the theme when the user first visits the page
@@ -72,9 +72,7 @@ export default function Main(props: any) {
   }, [authReady, user, router, logout])
 
   return (
-    <ProConfigProvider
-      dark={dark}
-      hashed={false}>
+    <ProConfigProvider dark={dark} hashed={false}>
       <ProLayout
         logo={"/logo.png"}
         title="AI Draw"
@@ -111,7 +109,7 @@ export default function Main(props: any) {
         }}
         menuHeaderRender={menuHeaderRender}
       >
-        {props.children}
+        {children}
       </ProLayout>
     </ProConfigProvider>
   )
