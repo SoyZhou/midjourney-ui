@@ -40,7 +40,7 @@
     "eventsource-parser": "^1.0.0",
     "midjourney": "^4.3.12",
     "netlify-identity-widget": "^1.9.2",
-    "next": "^13.4.13"
+    "next": "^13.4.9"
   },
   "keywords": [
     "midjourney-api",
