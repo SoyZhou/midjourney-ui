@@ -52,14 +52,9 @@ export const Imagine = (body: string, loading?: (uri: MJMessage) => void) => {
   return streamFetch("/api/imagine/", body, loading);
 };
 
-export const Upscale = (body: string, loading?: (uri: MJMessage) => void) => {
-  return streamFetch("/api/upscale/", body, loading);
-};
-
-export const Variation = (body: string, loading?: (uri: MJMessage) => void) => {
-  return streamFetch("/api/variation/", body, loading);
-};
-
 export const Custom = (body: string, loading?: (uri: MJMessage) => void) => {
   return streamFetch("/api/custom/", body, loading);
+};
+export const WaitMessage = (body: string, loading?: (uri: MJMessage) => void) => {
+  return streamFetch("/api/wait-message/", body, loading);
 };
