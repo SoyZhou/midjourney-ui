@@ -43,7 +43,7 @@ const findIframe = async (page: Page) => {
 const timeout = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const getIframeAddress = async (messageId: string) => {
-  const browser = await puppeteer.launch({headless: false});
+  const browser = await puppeteer.launch({headless: "new"});
   const page = await browser.newPage();
 
   const bypassLocalStorageOverride = (page: Page) =>
